@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>{{ page_title }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Flood Impacts, Carbon Pricing and Ecosystem Sustainability" />
+        <meta name="keywords" content="fincapes, flood insurance in indonesia, asuransi banjir di indonesia" />
+        <meta content="FINCAPES Project" name="author" />
+
+        <!-- fevicon -->
+        <link rel="shortcut icon" href="img/favicon.ico">
+
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" />
+    </head>
+    <body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="81">
+
+        {% include 'landing/navbar.html' %}
+
+        <div class="overflow-hidden-x position-relative" id="landing-page">
+            {% block content %}{% endblock %}
+            {% include 'landing/slider.html' %}
+            {% include 'landing/what_we_do.html' %}
+            {% include 'landing/home-news-update.html' %}
+            {% include 'landing/home-cta.html' %}
+            {% include 'landing/who_involve.html' %}
+            {% include 'landing/footer.html' %}
+        </div>
+
+        <script src="{% static 'js/core.js' %}"></script>
+        <script src="{% static 'js/counter.js' %}"></script>
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'js/aos.js' %}"></script>
+        <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+        <script src="{% static 'js/particles.min.js' %}"></script>
+        <script src="{% static 'js/app.js' %}"></script>
+        <script src="{% static 'js/fincapes.js' %}"></script>
+    </body>
+</html>

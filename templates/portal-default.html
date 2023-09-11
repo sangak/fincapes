@@ -1,0 +1,62 @@
+{% load static %}
+{% load i18n l10n %}
+{% get_current_language as bahasa %}
+<!DOCTYPE html>
+<html lang="{{ bahasa }}">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Flood Impacts, Carbon Pricing, and Ecosystem Sustainability">
+	<meta name="author" content="FINCAPES">
+	<meta name="keywords" content="fincapes, nilai ekonomi karbon, resiko banjir, uwaterloo, nature based solutions, nbs, carbon pricing, carbon offset">
+
+	<title>{{ page_title }}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="{% static 'css/portal-style.css' %}">
+
+</head>
+<body>
+    <div class="main-wrapper">
+        {% if show_sidebar %}{% include 'portal/nav-sidebar.html' %}{% endif %}
+        <div class="page-wrapper{% if not show_sidebar %} full-page{% endif %}">
+            {% if show_sidebar %}{% include 'portal/navbar.html' %}{% endif %}
+            {% block contents %}{% endblock %}
+            {% if show_sidebar %}{% include 'portal/footer.html' %}{% endif %}
+        </div>
+	</div>
+    {% include 'bootstrap-modal.html' %}
+    <script src="{% static 'js/core.js' %}"></script>
+    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.js"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ajax_datatable/js/utils.js' %}"></script>
+    <script src="{% static 'js/plugins/chart.min.js' %}"></script>
+    <script src="{% static 'js/plugins/jquery.flot.js' %}"></script>
+    <script src="{% static 'js/plugins/jquery.flot.resize.js' %}"></script>
+    <script src="{% static 'js/plugins/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+    <script src="{% static 'js/bootstrap5.modal.forms.min.js' %}"></script>
+    <script src="{% static 'js/plugins/apexcharts.min.js' %}"></script>
+    <script src="{% static 'js/feather.min.js' %}"></script>
+    <script src="{% static 'js/fincapes.js' %}"></script>
+    <script src="{% static 'js/portal-app.js' %}"></script>
+    <script src="{% static 'js/portal.js' %}"></script>
+    <script>
+        $(function() {
+          if($('#datePickerExample').length) {
+            var date = new Date();
+            var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            $('#datePickerExample').datepicker({
+              format: "mm/dd/yyyy",
+              todayHighlight: true,
+              autoclose: true
+            });
+            $('#datePickerExample').datepicker('setDate', today);
+          }
+        });
+    </script>
+    {% block javascript %}{% endblock %}
+</body>
+</html>

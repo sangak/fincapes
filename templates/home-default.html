@@ -1,0 +1,58 @@
+{% load static %}
+{% load i18n l10n %}
+{% get_current_language as bahasa %}
+<!DOCTYPE html>
+<html lang="{{ bahasa }}">
+    <head>
+        <meta charset="utf-8" />
+        <title>{{ page_title }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Flood Impacts, Carbon Pricing and Ecosystem Sustainability" />
+        <meta name="keywords" content="fincapes, flood insurance in indonesia, asuransi banjir di indonesia" />
+        <meta content="FINCAPES Project" name="author" />
+
+        <link rel="shortcut icon" href="img/favicon.ico">
+
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" />
+        <script src="{% static 'js/core.js' %}"></script>
+    </head>
+    <body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="81">
+        {% if navbar_needed %}
+            {% include 'landing/navbar.html' %}
+        {% endif %}
+        <div class="overflow-hidden-x position-relative" id="landing-page">
+            {% block content %}{% endblock %}
+            {% if show_footer %}
+                {% include 'landing/who_involve.html' %}
+                {% include 'landing/footer.html' %}
+            {% endif %}
+        </div>
+
+        <script src="{% static 'js/counter.js' %}"></script>
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+        <script src="https://unpkg.com/feather-icons"></script>
+        <script src="{% static 'js/htmx.min.js' %}"></script>
+        <script src="{% static 'js/aos.js' %}"></script>
+        <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+        <script src="{% static 'js/particles.min.js' %}"></script>
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <script src="{% static 'js/app.js' %}"></script>
+        <script src="{% static 'js/fincapes.js' %}"></script>
+        <script>
+            const megaMenu = new HSMegaMenu('.js-mega-menu', {
+                desktop: {
+                  position: 'left'
+                }
+              });
+        </script>
+        <script>
+            feather.replace();
+            $(function () {
+                $('#language').on('change', function (e) {
+                    e.preventDefault();
+                    $(this).closest('form').submit();
+                })
+            })
+        </script>
+    </body>
+</html>

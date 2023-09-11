@@ -1,0 +1,52 @@
+{% extends 'portal-default.html' %}
+{% load crispy_forms_tags static %}
+{% block contents %}
+    <nav class="navbar">
+        <div class="navbar-content justify-content-center flex-column">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <img src="{% static 'img/logo-dark.png' %}" height="40">
+                </li>
+            </ul>
+            <ul class="breadcrumb breadcrumb-arrow align-self-center">
+                <li class="breadcrumb-item">Home</li>
+                <li class="breadcrumb-item">Profile</li>
+                <li class="breadcrumb-item">Update</li>
+                {% if uri == 'avatar' %}
+                <li class="breadcrumb-item">Avatar</li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="page-content d-flex flex-column align-items-center" style="margin-top: 100px;">
+        <div class="row w-100 mx-0">
+            <div class="col-md-8 col-xl-6 mx-auto">
+                <h2 class="text-center mb-2 fw-normal">Complete your account!</h2>
+                <p class="text-muted text-center mb-5">
+                    Please complete your account profile before continue to the portal system
+                </p>
+            </div>
+        </div>
+        <div class="row w-100 mx-0">
+            <div class="{% if uri == 'profile_update' %}col-md-8 col-xl-6{% else %}col-xl-4 col-sm-12{% endif %} mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        {% if uri == 'profile_update' %}
+                        {% crispy form %}
+                        {% elif uri == 'avatar' %}
+                            <div class="text-center">
+                                <div class="avatar-img-wrapper">
+                                    <img src="{% if object.photo.is_available %}{{ object.photo.url }}{% else %}{% static 'img/user-default.jpg' %}{% endif %}">
+                                    <div class="flex-row">
+                                        <a class="btn btn-danger" href="#">Update</a>
+                                    <a class="btn btn-outline-muted" data-href="{% url 'portal:index' %}">Next</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

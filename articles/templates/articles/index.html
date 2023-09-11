@@ -1,0 +1,58 @@
+{% extends 'home-default.html' %}
+{% load static i18n %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <div class="row justify-content-start">
+                <div class="col-lg-9 mb-5">
+                    <article>
+                        <header>
+                            <h2 class="fw-medium">
+                                {{ object.judul|safe }}
+                            </h2>
+                            <ul class="list-inline d-sm-flex mb-0 mt-3">
+                                <li class="list-inline-item fs-12 text-muted">
+                                    {{ object.author }}
+                                </li>
+                                <li class="list-inline-item fs-12">|</li>
+                                <li class="list-inline-item fs-12 text-muted">
+                                    {{ object.get_update }}
+                                </li>
+                                <li class="list-inline-item fs-12">|</li>
+                                <li class="list-inline-item fs-12 text-muted">
+                                    <i class="mdi mdi-thumb-up-outline"></i> 2 Likes
+                                </li>
+                                <li class="list-inline-item fs-12">|</li>
+                                <li class="list-inline-item fs-12 text-muted">
+                                    <i class="mdi mdi-share-outline"></i> Share
+                                </li>
+                                <li class="list-inline-item fs-12 text-muted ms-auto">
+                                    <i class="mdi mdi-printer-outline"></i> Print
+                                </li>
+                            </ul>
+                        </header>
+                        <hr class="my-4 text-muted">
+                        <div class="fw-normal">
+                            <figure>
+                                <img src="{{ object.photo.url }}" class="img-fluid">
+                            </figure>
+                            {{ object.artikel.html|safe }}
+                        </div>
+                    </article>
+                </div>
+                <div class="col-lg-3">
+                    <div class="mb-5">
+                        <h3 class="fw-normal">
+                            Latest News
+                        </h3>
+                        <ul class="list-unstyled">
+                            <li>a</li>
+                            <li>b</li>
+                            <li>c</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

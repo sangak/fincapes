@@ -1,0 +1,14 @@
+{% load crispy_forms_tags %}
+{% include 'modal-header.html' %}
+{% crispy form %}
+<script>
+    $(document).ready(function () {
+        window.bsButtonID = 0
+
+        $('.modal').on('shown.bs.modal', function (ev) {
+            $('.django-select2').djangoSelect2();
+            ev.preventDefault();
+            ev.stopPropagation()
+        })
+    })
+</script>

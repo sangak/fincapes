@@ -1,0 +1,42 @@
+{% extends 'portal-default.html' %}
+{% load static crispy_forms_tags %}
+{% block contents %}
+    <div class="page-wrapper full-page">
+        <div class="page-content d-flex align-items-center justify-content-center">
+            <div class="row w-100 mx-0 auth-page">
+                <div class="col-md-8 col-xl-6 mx-auto">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-md-4 pe-md-0">
+                                <div class="auth-side-wrapper">
+                                    <img class="img-fluid" src="{% static 'img/logo-light.png' %}">
+                                </div>
+                            </div>
+                            <div class="col-md-8 ps-md-0">
+                                <div class="auth-form-wrapper px-4 py-5">
+                                    <a href="#" class="fincapes-ui-logo d-block mb-2">
+                                        Portal<span>System</span>
+                                    </a>
+                                    <h5 class="text-muted fw-normal mb-5">
+                                        {% if uri == 'login' %}
+                                        Welcome back! Log in to your account.
+                                        {% else %}
+                                        Please register your account to access the system
+                                        {% endif %}
+                                    </h5>
+                                    {% crispy form %}
+                                    <p class="text-muted">
+                                        {% if uri == 'login' %}Don't have an account?{% else %}I have an account!{% endif %}
+                                        <a href="{% if uri == 'login' %}{% url 'register' %}{% else %}{% url 'login' %}{% endif %}" class="d-inline-block mt-3">
+                                            {% if uri == 'login' %}Sign up{% else %}Sign in{% endif %}
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'portal-default.html' %}
+{% load i18n static %}
+{% block contents %}
+    <div class="page-content">
+        <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+            <div>
+                <h4 class="mb-3 mb-md-0">{% trans 'Donor Information' %}</h4>
+            </div>
+            <div>
+                <span class="badge bg-success text-white" id="save-me" style="display: none">{% trans 'Saving process ...' %}</span>
+            </div>
+        </div>
+        <div class="row pb-0">
+            <div class="col-12 col-xl-12 grid-margin stretch-card mb-0">
+                <div class="card overflow-hidden">
+                    <div class="card-body d-flex flex-column justify-content-start">
+                        <div class="table-container">
+                            <table id="donor-list"
+                                   class="table table-striped listTable"
+                                   data-table-name="listTable"
+                                   data-show-search="true"
+                                   data-show-btn-action="true"
+                                   data-show-pagination="true"
+                                   data-add-btn-title="{% trans 'Add Donor' %}"
+                                   data-add-url="{% url 'donor:create' %}"
+                                   data-ajax-url="{% url 'donor:donor-list-ajax' %}">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script>
+        $(function () {
+
+            $.FincapesCore.components.dataTable.init($('.listTable'));
+            let donorTable = jQuery('#donor-list');
+
+
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% load static crispy_forms_tags %}
+<nav class="navbar navbar-expand-lg nav-sticky navbar-custom js-mega-menu" id="navbar">
+    <div class="container-fluid ps-0 pe-0">
+        <a class="navbar-brand text-uppercase" href="{% url 'frontpage:index' %}">
+            <img class="logo-light" src="{% static 'img/logo-dark.png' %}" alt="" height="45">
+            <img class="logo-dark" src="{% static 'img/logo-dark.png' %}" alt="" height="32">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="mdi mdi-menu"></span>
+        </button>
+        <div class="collapse navbar-collapse flex-column align-items-end" id="navbarCollapse">
+            <div class="contact-number">
+                <div class="row">
+                    <div class="col-lg-8 pb-0">
+                        <ul class="list-unstyled mail-contact">
+                            <li class="list-inline-item">
+                                <a href="#">
+                                    <i class="mdi mdi-whatsapp" title="Whatsapp"></i>
+                                    +62 813 6161 5604
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="mailto:info@{{ app_name.domain }}">
+                                    <i class="mdi mdi-email"></i>
+                                    info@{{ app_name.domain }}
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                {% crispy language_form %}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <ul class="list-unstyled social-icon text-end">
+                            <li class="list-inline-item"><a href="javascript:void(0)"><i data-feather="facebook" stroke-width="1" width="20"></i></a></li>
+                            <li class="list-inline-item"><a href="javascript:void(0)"><i data-feather="twitter" stroke-width="1" width="20"></i></a></li>
+                            <li class="list-inline-item"><a href="javascript:void(0)"><i data-feather="instagram" stroke-width="1" width="20"></i></a></li>
+                            <li class="list-inline-item"><a href="javascript:void(0)"><i data-feather="linkedin" stroke-width="1" width="20"></i></a></li>
+                            <li class="list-inline-item"><a href="javascript:void(0)"><i data-feather="youtube" stroke-width="1" width="20"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <ul class="navbar-nav mx-auto my-auto" id="navbar-navlist">
+                <li class="nav-item">
+                    <a class="nav-link{% if uri == 'about-us' %} active{% endif %}" href="{% if uri == 'about-us' %}#{% else %}{% url 'frontpage:about-us' %}{% endif %}">About Us</a>
+                </li>
+                <li class="hs-has-mega-menu nav-item"
+                    data-hs-mega-menu-item-options='{
+                        "desktop": {
+                        "maxWidth": "40rem"
+                    }
+                }'>
+                    <a id="progMegaMenu" class="hs-mega-menu-invoker nav-link dropdown-toggle " href="#" role="button" aria-expanded="false">Program</a>
+                    <div class="hs-mega-menu dropdown-menu" aria-labelledby="progMegaMenu" style="min-width: 12rem;">
+                        <div class="row">
+                            <div class="col-lg d-none d-lg-block">
+                                <div class="bg-light rounded-3 h-100 p-4">
+                                    <span class="d-block fs-4 fw-bold text-dark mb-3">Latest from the Blog</span>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3 mb-md-0">
+                                            <a class="d-block" href="./documentation/index.html">
+                                                <img class="img-fluid rounded-2 mb-2" src="./assets/svg/components/card-1.svg" alt="Image Description">
+                                                <span class="fs-4 fw-medium text-dark text-inherit">Documentation</span>
+                                                <p class="fs-6 text-body">Development guides for building projects with Unify</p>
+                                                <span class="link link-pointer">Learn more</span>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <a class="d-block" href="./snippets/index.html">
+                                                <img class="img-fluid rounded-2 mb-2" src="./assets/svg/components/card-2.svg" alt="Image Description">
+                                                <span class="fs-4 fw-medium text-dark text-inherit">Snippets</span>
+                                                <p class="fs-6 text-body">Move quickly with copy-to-clipboard feature</p>
+                                                <span class="link link-pointer">Learn more</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="navbar-dropdown-menu-inner">
+                                    <span class="dropdown-header">Classic</span>
+                                    <a class="dropdown-item " href="./blog-modern.html">Modern <span class="badge text-primary">New</span></a>
+                                    <a class="dropdown-item " href="./blog-grid.html">Grid</a>
+                                    <a class="dropdown-item " href="./blog-list.html">List</a>
+                                    <a class="dropdown-item " href="./blog-article.html">Article <span class="badge text-primary">New</span></a>
+                                    <a class="dropdown-item " href="./blog-author-profile.html">Author Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#publication">Publication</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Inside Story</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

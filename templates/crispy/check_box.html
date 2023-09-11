@@ -1,0 +1,16 @@
+{% load crispy_forms_field %}
+<div class="form-group">
+    <label class="form-check-label u-check">
+        {% crispy_field field %}
+        <div class="u-check-icon">
+            <i class="mdi" data-check-icon="&#xF012C"></i>
+        </div>
+
+        {{ field.label|safe }}
+    </label>
+    {% if field.errors %}
+        {% for error in field.errors %}
+            <span class="error">{{ error }}</span>
+        {% endfor %}
+    {% endif %}
+</div>

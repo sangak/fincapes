@@ -1,0 +1,5 @@
+{% load landingtags %}{% variable_value 'aplikasi' as aplikasi %}
+<footer class="footer d-flex flex-column flex-md-row align-items-center justify-content-between px-4 py-3 border-top small">
+    <p class="text-muted mb-1 mb-md-0">Copyright © {% get_current_year %} <a href="{% url 'frontpage:index' %}" target="_blank">{{ aplikasi.portal_app }}</a></p>
+    <p class="text-muted">Version {{ aplikasi.version }}</p>
+</footer>

@@ -1,0 +1,62 @@
+{% extends 'portal-default.html' %}
+{% load i18n static crispy_forms_tags %}
+{% get_current_language as bahasa %}
+{% block contents %}
+    <div class="page-content">
+        <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+            <div>
+                <h4 class="mb-3 mb-md-0">{% trans 'General Information' %}</h4>
+            </div>
+            <div>
+                <span class="badge bg-success text-white" id="save-me" style="display: none">{% trans 'Saving process ...' %}</span>
+            </div>
+        </div>
+        <div class="row pb-0">
+            <div class="col-12 col-xl-12 grid-margin mb-0">
+                <div class="card overflow-hidden">
+                    <div class="card-body">
+                        {% crispy form %}
+                        <ul class="nav nav-tabs" id="commitment-list" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home-commitment" role="tab" aria-controls="home-commitment" aria-selected="true">{% trans 'Commitment' %}</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content border border-top-0 p-3" id="myTabCommitment">
+                            <div class="tab-pane fade show active" id="home-commitment" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="table-container">
+                                    <table id="commitment-table"
+                                           class="table table-striped"
+                                           data-show-search="true"
+                                           data-show-btn-action="true"
+                                           data-show-pagination="false"
+                                           data-add-btn-title="{% trans 'Add Donor' %}"
+                                           data-add-url="{% url 'project:new-commitment' %}"
+                                           data-ajax-url="{% url 'project:commitment-ajax-list' %}">
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-blue" type="button" id="btn-update-project">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+<script>
+    $(document).ready(function () {
+        let config = {
+            language: "{{ bahasa }}"
+        }
+        $.FincapesCore.components.datePicker.init('.date-picker', config);
+        $.FincapesCore.components.dataTable.init('#commitment-table');
+        $('#btn-update-project').on('click', function (e) {
+            e.preventDefault();
+            $('#frm-project-update').submit()
+        })
+    })
+</script>
+{% endblock %}

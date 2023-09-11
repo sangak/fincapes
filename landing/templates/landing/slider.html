@@ -1,0 +1,56 @@
+{% load static %}
+<div class="swiper mySwiper2">
+    <div class="swiper-wrapper">
+        {% for slider in sliders %}
+        <div class="swiper-slide">
+            <section class="section home grabbable" data-bg-img-src="{{ slider.photo.url }}" id="home">
+                <div class="bg-overlay"></div>
+                <div class="container">
+                    <div class="row justify-content-center text-center">
+                        <div class="col-lg-10">
+                            <div class="home-heading text-cursor">
+                                <h1 class="mb-3 text-white fw-medium">
+                                    {{ slider.title_animation|safe }}
+                                </h1>
+                            </div>
+                            <p class="text-white fs-20 text-cursor">
+                                {{ slider.brief_description|safe }}
+                            </p>
+                            <div class="home-btn hstack gap-2 flex-column d-sm-block">
+                                <a class="btn btn-secondary" href="{% url 'article:detail' slider.slug slider.pk %}">
+                                    more detail
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        {% endfor %}
+        <div class="swiper-slide">
+            <section class="section home home-2 grabbable" id="home">
+                <video autoplay muted loop id="myVideo">
+                    <source src="{% static 'img/slider/home-3.mp4' %}" type="video/mp4">
+                </video>
+            <div class="bg-overlay"></div>
+                <div class="container">
+                    <div class="row text-center justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="home-heading">
+                                <h1 class="mb-3 text-white text-cursor">The <span class="text-warning">FINCAPES</span> project <br>
+                                    will play a key role</h1>
+                            </div>
+                                <p class="text-white-50 fs-20 text-cursor">in helping Indonesia scale-up its climate
+                                adaptation and mitigation efforts in critical areas.</p>
+                            <div class="home-btn hstack gap-2 flex-column d-sm-block">
+                                <a class="btn btn-secondary" href="javascript:void(0)">
+                                    Check our programs
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
