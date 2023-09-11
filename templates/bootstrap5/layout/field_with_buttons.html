@@ -9,7 +9,7 @@
 
     <div{% if field_class %}class="{{ field_class }}"{% endif %}>
         <div class="input-group mb-3{% if input_size %} {{ input_size }}{% endif %}">
-            <div class="position-relative w-100 d-flex justify-content-end">
+            <div class="position-relative w-100 d-flex justify-content-end mb-1">
                 {% if field.errors %}
                     {% crispy_field field 'class' 'form-control is-invalid' %}
                 {% else %}
@@ -19,10 +19,10 @@
                     {{ buttons|safe }}
                 </div>
             </div>
-        </div>
-        {% for error in field.errors %}
-            <p id="error_{{ forloop.counter }}_{{ field.auto_id }}" class="text-danger mb-0">{{ error }}</p>
+            {% for error in field.errors %}
+            <label id="error_{{ forloop.counter }}_{{ field.auto_id }}" class="error">{{ error }}</label>
         {% endfor %}
         {% include 'bootstrap5/layout/help_text.html' %}
+        </div>
     </div>
 </div>

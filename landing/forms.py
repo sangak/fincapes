@@ -26,7 +26,7 @@ class ChangeLanguageForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_show_labels = False
         self.fields['language'].initial = bahasa
-        self.helper.field_template = 'bootstrap5/field2.html'
+        # self.helper.field_template = 'bootstrap5/field2.html'
         self.helper.form_group_wrapper_class = 'mb-0'
         self.helper.form_action = reverse('set_language')
 

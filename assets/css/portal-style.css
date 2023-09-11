@@ -43577,6 +43577,7 @@ code {
 legend {
   color: #6a7979;
   font-weight: 500;
+  font-size: 0.8rem;
   letter-spacing: 0.85px;
 }
 /*
@@ -47297,6 +47298,17 @@ textarea.no-resize {
   display: flex;
   align-items: end;
   background: linear-gradient(180deg, #176033 10%, #2ea044 100%);
+}
+form#login-form .btn-append {
+  padding-right: 0 !important;
+}
+form#login-form .btn-append > a.btn {
+  font-size: 85%;
+  line-height: 1.75;
+  color: #839393;
+}
+form#login-form .btn-append > a.btn:hover {
+  color: #525e5e;
 }
 /*
  * Email

@@ -33,12 +33,7 @@ class LoginForm(forms.Form):
                 'id': 'password'
             }
         ),
-        required=False,
-        help_text=mark_safe(f'''
-            <div class="d-flex mt-2 align-self-end justify-content-end">
-                <a href="#">{_('Forgot password?')}</a>
-            </div>
-        ''')
+        required=False
     )
 
     def __init__(self, request, *args, **kwargs):
@@ -54,8 +49,12 @@ class LoginForm(forms.Form):
             ),
             Row(
                 Column(
-                    'password',
-                    css_class='text-end'
+                    FieldWithButtons(
+                        'password',
+                        HTML(
+                            f'<a class="btn" href="#">{_("Forgot password?")}</a>'
+                        )
+                    )
                 )
             ),
             Div(
