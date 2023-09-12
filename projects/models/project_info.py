@@ -2,7 +2,6 @@ from django.db import models
 from django.db.models import Sum
 from django.db.models.signals import pre_save
 from django.contrib.auth import get_user_model
-from django.urls import reverse
 from donors.models import Donor
 from fincapes.helpers import get_locale_date
 from fincapes.utils import unique_id_generator, unique_slug_generator, currency
@@ -33,7 +32,7 @@ class ProjectManager(models.Manager):
         return None
 
     def all(self):
-        return self.get_queryset().recent().all()
+        return self.get_queryset().recent()
 
 
 class Project(models.Model):
