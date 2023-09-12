@@ -3,11 +3,13 @@ from django.db.models import Max
 from django.db.models.signals import pre_save
 from django.contrib.auth import get_user_model
 from fincapes.utils import unique_id_generator
+from ..models import Project
 
 User = get_user_model()
 
 
 class UltimateOutcome(models.Model):
+    project = models.ForeignKey(Project, null=True, on_delete=models.SET_NULL, related_name='logic_model')
     uid = models.CharField(max_length=64, unique=True, editable=False)
     code = models.SmallIntegerField(unique=True, default=1000)
     description = models.TextField(null=True, blank=True)

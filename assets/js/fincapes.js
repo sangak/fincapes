@@ -89,10 +89,10 @@
                     customDom;
                 if ($this.attr('data-custom-dom')) {
                     customDom = "<'row mb-3 d-flex align-items-baseline'<'col-lg-9 col-sm-6'" +
-                            "<'#toolbar'>><'col-lg-3 col-sm-6'f>><'row'<'col-sm-12'tr>>" +
+                            "<'#toolbar'>><'col-lg-3 col-sm-6'>><'row'<'col-sm-12'tr>>" +
                             "<'row'<'col-sm-5'i><'col-sm-7'p>>"
                 } else {
-                    customDom = "<'row mb-3'<'col-lg-10 col-sm-7'f><'col-lg-2 col-sm-5'<'#btn-actions'>>>" +
+                    customDom = "<'row mb-3'<'col-lg-10 col-sm-7'><'col-lg-2 col-sm-5'<'#btn-actions'>>>" +
                                 "<'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>"
                 }
 
@@ -125,7 +125,9 @@
                         jQuery('#modal').on('hidden.bs.modal', function (e) {
                             $this.DataTable().ajax.reload()
                         })
-                        console.log($(this).data('total-amount'))
+                        $('#navbarForm').keyup(function () {
+                            $this.DataTable().search($(this).val()).draw();
+                        })
                     })
 
                     AjaxDatatableViewUtils.init({
