@@ -5,8 +5,8 @@ from django.http import Http404
 from django.utils.translation import gettext as _
 from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, BSModalDeleteView
 from fincapes.mixins import ContextDataMixin
-from .forms import ProjectModelForm, CommitmentBSModelForm
-from .models import Project, Commitment
+from ..forms import ProjectModelForm, CommitmentBSModelForm
+from ..models import Project, Commitment
 
 
 class ProjectHomeView(LoginRequiredMixin, ContextDataMixin, UpdateView):
