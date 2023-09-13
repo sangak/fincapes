@@ -37,21 +37,29 @@ class CommitmentAjaxListView(DatatableView):
         row['amount'] = total
 
         row['actions'] = f'''
-            <a  
-                class="btn btn-sm btn-dark pt-1 pb-1" id="btn-bs-crud"
-                data-form-url="{reverse_lazy('project:update-commitment', kwargs={'uid': obj.uid})}"
-                data-async-update="true"
-                data-element-id="#commitment-list"
-                data-key="table"
-                data-response-url="{reverse_lazy('portal:no_response')}"
-            ><i class="fa fa-pencil"></i></a>
-        <a class="btn btn-sm btn-danger pt-1 pb-1" 
-            id="btn-bs-delete"
-            data-form-url="{reverse_lazy('project:delete-commitment', kwargs={'pk': obj.pk})}"
-            data-async-update="true"
-            data-element-id="#commitment-list"
-            data-key="table"
-            data-response-url="{reverse_lazy('portal:no_response')}"
-            data-is-delete="true"
-        ><i class="fa fa-trash"></i></a>
+            <div class="dropdown mb-0">
+                <button class="btn p-0 btn-default" type="button" id="dropdownMenuAction" data-bs-toggle="dropdown" 
+                aria-haspopup="true" aria-expanded="false">
+                    <i class="icon-lg text-muted" data-feather="more-horizontal"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuAction">
+                    <a 
+                        class="dropdown-item d-flex align-items-center p-2" id="btn-bs-crud"
+                        data-form-url="{reverse_lazy('project:update-commitment', kwargs={'uid': obj.uid})}"
+                        data-async-update="true"
+                        data-element-id="#donor-list"
+                        data-key="table"
+                        data-response-url="{reverse_lazy('portal:no_response')}">
+                        <i data-feather="edit-2" class="icon-sm me-2"></i>
+                        <span class="">Edit</span>
+                    </a>
+                    <a class="dropdown-item d-flex align-items-center p-2" 
+                        id="btn-bs-delete"
+                        data-form-url="{reverse_lazy('project:delete-commitment', kwargs={'pk': obj.pk})}"
+                        data-is-delete="true">
+                        <i class="icon-sm me-2 text-danger" data-feather="trash"></i>
+                        <span class="text-danger">Delete</span>
+                    </a>
+                </div>
+            </div>
         '''

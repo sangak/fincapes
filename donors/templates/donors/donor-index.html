@@ -23,6 +23,7 @@
                                    data-show-pagination="true"
                                    data-add-btn-title="{% trans 'Add Donor' %}"
                                    data-add-url="{% url 'donor:create' %}"
+                                   data-response-url="{% url 'portal:no_response' %}"
                                    data-ajax-url="{% url 'donor:donor-list-ajax' %}">
                             </table>
                         </div>

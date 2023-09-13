@@ -41,6 +41,49 @@
                     if (imgSrc) $el.attr('src', imgSrc);
                 })
             },
+            bsUpdate: function (collection) {
+                if (!collection || !collection.length) return;
+                var config = {
+                    formURL: null,
+                    asyncUpdate: false,
+                    errorClass: '.is-invalid',
+                    isDeleteForm: false,
+                    asyncSettings: {
+                        closeOnSubmit: true,
+                        successMessage: null,
+                        dataUrl: null,
+                        dataElementId: null,
+                        dataKey: "response",
+                        addModalFormFunction: null
+                    }
+                }
+                return collection.each(function (i, el) {
+                    let $el = $(el),
+                        successMsg = [
+                            "<script>$('#save-me').show().delay(1000).fadeOut();</script>"
+                        ].join();
+
+                    function updateModal() {
+                        $el.each(function () {
+                            $(this).modalForm({
+                                formURL: $(this).data('form-url'),
+                                errorClass: config.errorClass,
+                                asyncUpdate: $(this).data('async-update') ? $(this).data('async-update') : config.asyncUpdate,
+                                isDeleteForm: $(this).data('is-delete') ? $(this).data('is-delete') : config.isDeleteForm,
+                                asyncSettings: {
+                                    closeOnSubmit: $(this).data('close-on-submit') ? $(this).data('close-on-submit') : config.asyncSettings.closeOnSubmit,
+                                    successMessage: successMsg,
+                                    dataUrl: $(this).data('response-url') ? $(this).data('response-url') : config.asyncSettings.dataUrl,
+                                    dataElementId: $(this).data('element-id') ? $(this).data('element-id') : config.asyncSettings.dataElementId,
+                                    dataKey: $(this).data('key') ? $(this).data('key') : config.asyncSettings.dataKey,
+                                    addModalFormFunction: updateModal
+                                }
+                            })
+                        })
+                    }
+                    updateModal()
+                })
+            },
 
             extendjQuery: function () {
                 $.fn.extend({
@@ -98,29 +141,26 @@
 
                 function updateDataTable() {
                     $this.on('drawCallback', function (settings) {
-
+                        feather.replace()
+                        $.FincapesCore.helpers.bsUpdate($('tbody tr a#btn-bs-crud'));
+                        $.FincapesCore.helpers.bsUpdate($('tbody tr a#btn-bs-delete'));
+                        //$.FincapesCore.components.bsUpdate.init($('tbody tr a#btn-bs-delete'));
                     })
                     $this.on('rowCallback', function (table, row, data) {
 
                     });
                     $this.on('initComplete', function (settings) {
-
+                        feather.replace()
                         let btnAdd = '<button type="button" ' +
                             'class="btn btn-primary btn-icon-text mb-2 mb-md-0 pt-1 pb-1" ' +
-                            'data-bs-add-url="' + $this.attr('data-add-url') +'" id="bs-add">' +
+                            'data-form-url="' + $this.attr('data-add-url') +'" id="btn-bs-add" ' +
+                            'data-async-update="true" ' +
+                            'data-element-id="#' + $this.attr('id') + '" ' +
+                            'data-key="table" ' +
+                            'data-response-url="' + $this.attr('data-response-url') + '">' +
                             '<i class="mdi mdi-plus me-1"></i>' + $this.attr('data-add-btn-title') +
                             '</button>'
                         $('#btn-actions').append(btnAdd);
-
-                        $("#bs-add").modalForm({
-                            formURL: $(this).data('add-url'),
-                            errorClass: '.is-invalid'
-                        });
-
-                        $this.on('click', 'tbody tr a', function () {
-                            $.FincapesCore.components.bsUpdate.init($('tbody tr a'))
-                        })
-
 
                         jQuery('#modal').on('hidden.bs.modal', function (e) {
                             $this.DataTable().ajax.reload()
@@ -128,6 +168,7 @@
                         $('#navbarForm').keyup(function () {
                             $this.DataTable().search($(this).val()).draw();
                         })
+                        $.FincapesCore.helpers.bsUpdate($('#btn-bs-add'));
                     })
 
                     AjaxDatatableViewUtils.init({
@@ -161,94 +202,6 @@
                 }
                 updateDataTable();
             });
-        }
-    };
-
-    $.FincapesCore.components.bsUpdate = {
-        _baseConfig: {
-            formURL: null,
-            asyncUpdate: false,
-            errorClass: '.is-invalid',
-            isDeleteForm: false,
-            asyncSettings: {
-                closeOnSubmit: true,
-                successMessage: null,
-                dataUrl: null,
-                dataElementId: null,
-                dataKey: "response",
-                //addModalFormFunction: null
-            }
-        },
-        pageCollection: $(),
-
-        init: function (selector, config) {
-            this.collection = selector && $(selector).length ? $(selector) : $();
-
-            if (!$(selector).length) return;
-
-            this.config = config && $.isPlainObject(config) ?
-                $.extend({}, this._baseConfig, config) : this._baseConfig;
-
-            this.config.itemSelector = selector;
-
-            this.initBSUpdate();
-            return this.pageCollection;
-        },
-
-        initBSUpdate: function () {
-            var $self = this,
-                config = $self.config;
-
-            $self.collection.each(function (i, el) {
-                var $this = $(el),
-                    responseId = $this.data('response-id'),
-                    successMsg = [
-                        "<script>$('#save-me').show().delay(1000).fadeOut();</script>"
-                    ].join();
-
-                function updateDataModalForm() {
-                    $this.modalForm({
-                       formURL: $this.data('form-url'),
-                        errorClass: config.errorClass,
-                        asyncUpdate: $this.attr('data-async-update') ? $this.data('async-update') : config.asyncUpdate,
-                        asyncSettings: {
-                            closeOnSubmit: $this.attr('data-close-on-submit') ? $this.attr('data-close-on-submit') : config.asyncSettings.closeOnSubmit,
-                            successMessage: successMsg,
-                            dataUrl: $this.attr('data-response-url') ? $this.data('response-url') :
-                                config.asyncSettings.dataUrl,
-                            dataElementId: $this.attr('data-element-id') ? $this.data('element-id') : config.asyncSettings.dataElementId,
-                            dataKey: $this.data('key') ? $this.data('key') : config.asyncSettings.dataKey,
-                            addModalFormFunction: reinstantiateModalForms
-                        }
-                    });
-                }
-                updateDataModalForm()
-
-                function deleteDataModalForm() {
-                    $('#btn-bs-delete').each(function () {
-                        $this.modalForm({
-                            formURL: $this.data('form-url'),
-                            isDeleteForm: true,
-                            asyncUpdate: true,
-                            asyncSettings: {
-                                closeOnSubmit: true,
-                                successMessage: successMsg,
-                                dataUrl: $this.attr('data-response-url') ? $this.data('response-url') :
-                                    config.asyncSettings.dataUrl,
-                                dataElementId: $this.attr('data-element-id') ? $this.data('element-id') : config.asyncSettings.dataElementId,
-                                dataKey: $this.data('key') ? $this.data('key') : config.asyncSettings.dataKey,
-                                addModalFormFunction: reinstantiateModalForms
-                            }
-                        })
-                    })
-                }
-                deleteDataModalForm()
-
-                function reinstantiateModalForms() {
-                    updateDataModalForm();
-                    deleteDataModalForm();
-                }
-            })
         }
     };
 
