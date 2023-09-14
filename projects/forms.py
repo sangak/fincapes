@@ -10,7 +10,7 @@ from django_select2.forms import Select2Widget, ModelSelect2Widget
 from fincapes.helpers import check_date_valid
 from fincapes.variables import label_settings, CURRENCY_CHOICES, SELECT_WIDGET_ATTRS
 from donors.models import Donor
-from .models import Commitment
+from .models import Commitment, UltimateOutcome
 
 
 class ProjectModelForm(forms.ModelForm):
@@ -64,8 +64,8 @@ class ProjectModelForm(forms.ModelForm):
         instance = kwargs.get('instance', None)
         if instance:
             kwargs['initial'] = {
-                'project_start': instance.get_local_project_start(),
-                'project_end': instance.get_local_project_end()
+                'project_start': instance.get_local_project_start('id'),
+                'project_end': instance.get_local_project_end('id')
             }
         # if instance:
         #     # self.fields['title'].widget.attrs['readonly'] = True
@@ -179,3 +179,44 @@ class CommitmentBSModelForm(BSModalModelForm):
             commitment.project = self.parent_project
             commitment.save()
         return commitment
+
+
+class UltimateOutcomeForm(forms.ModelForm):
+    project = forms.ModelChoiceField(
+        label=_('Project name'),
+        required=False,
+        queryset=Project.objects.all(),
+        widget=Select2Widget(attrs=SELECT_WIDGET_ATTRS)
+    )
+    code = forms.CharField(
+        label=_('Code'),
+        required=False,
+        initial=1000,
+        widget=forms.TextInput(attrs={
+            'readonly': True
+        })
+    )
+    description = forms.CharField(
+        label=_('Description'),
+        required=False,
+        widget=forms.Textarea(attrs={
+            'placeholder': _('Description'),
+            'class': 'no-resize',
+            'rows': 5
+        })
+    )
+
+    class Meta:
+        model = UltimateOutcome
+        fields = ['project', 'code', 'description']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('project', css_class='col-lg-8'),
+                Column('code', css_class='col-lg-4')
+            ),
+            Row('description')
+        )

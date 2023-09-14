@@ -89,7 +89,19 @@ class Commitment(models.Model):
     amount = models.DecimalField(max_digits=20, decimal_places=2, default=0.00)
 
     def __str__(self):
-        return f"{self.project.acronym} | {self.donor.acronym}" if self.project is not None else self.uid
+        return f"{self.project.acronym}" if self.project is not None else self.uid
+
+    @property
+    def get_project(self):
+        return self.project.acronym
+
+    @property
+    def get_donor(self):
+        return self.donor.acronym
+
+    @property
+    def total_amount(self):
+        return currency(self.amount)
 
 
 def pre_save_commitment(instance, *args, **kwargs):

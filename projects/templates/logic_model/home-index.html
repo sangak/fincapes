@@ -13,28 +13,10 @@
                     <div class="main-menu-icon">
                         <ul>
                             <li>
-                                <a class="ultimate" id="btn-main-menu-icon" data-href="#">
-                                    <i data-feather="briefcase" class="icon-menu-svg"></i>
+                                <a class="ultimate" id="btn-main-menu-icon" data-href="{% url 'project:add-logic' %}">
+                                    <i data-feather="plus" class="icon-menu-svg"></i>
                                 </a>
-                                Ultimate Outcome
-                            </li>
-                            <li>
-                                <a class="intermediate" id="btn-main-menu-icon" data-href="#">
-                                    <i class="icon-menu-svg" data-feather="layers"></i>
-                                </a>
-                                Intermediate Outcome
-                            </li>
-                            <li>
-                                <a class="immediate" id="btn-main-menu-icon" data-href="#">
-                                    <i class="icon-menu-svg" data-feather="wind"></i>
-                                </a>
-                                Immediate Outcome
-                            </li>
-                            <li>
-                                <a class="outputs" id="btn-main-menu-icon" data-href="#">
-                                    <i class="icon-menu-svg" data-feather="truck"></i>
-                                </a>
-                                Outputs
+                                {% trans 'Add Logic Model' %}
                             </li>
                         </ul>
                     </div>

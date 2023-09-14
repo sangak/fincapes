@@ -16,9 +16,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="{% static 'css/portal-style.css' %}">
-
+    <script src="{% static 'js/core.js' %}"></script>
 </head>
-<body>
+<body{% if add_animation %} class="add-animation"{% endif %}{% if css_id %} id="{{ css_id }}"{% endif %}>
     <div class="main-wrapper">
         {% if show_sidebar %}{% include 'portal/nav-sidebar.html' %}{% endif %}
         <div class="page-wrapper{% if not show_sidebar %} full-page{% endif %}">
@@ -28,7 +28,6 @@
         </div>
 	</div>
     {% include 'bootstrap-modal.html' %}
-    <script src="{% static 'js/core.js' %}"></script>
     <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.js"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'ajax_datatable/js/utils.js' %}"></script>
@@ -56,6 +55,15 @@
             $('#datePickerExample').datepicker('setDate', today);
           }
         });
+        let btnCancel = document.querySelectorAll('#btnCancel');
+        btnCancel.forEach(item => {
+            item.addEventListener('click', event => {
+                if (event) {
+                    event.preventDefault()
+                }
+                window.location = "{{ prev_path }}"
+            })
+        })
     </script>
     {% block javascript %}{% endblock %}
 </body>

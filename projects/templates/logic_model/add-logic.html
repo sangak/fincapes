@@ -1,0 +1,62 @@
+{% extends 'portal-default.html' %}
+{% load crispy_forms_tags static i18n %}
+{% block contents %}
+    <nav class="navbar nav-sticky">
+        <div class="navbar-content">
+            <ul class="navbar-nav d-flex w-100 justify-content-between flex-row">
+                <li class="nav-item">
+                    <a class="btn btn-icon" id="btnCancel">
+                        <i data-feather="x"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <h4 class="mb-0 lh-1">{{ page_sub_title }}</h4>
+                </li>
+                <li class="nav-item"></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="page-content d-flex flex-column align-items-center" style="margin-top: 60px;">
+        <div class="row w-100 mx-0">
+            <div class="col-md-10 col-xl-8 mx-auto">
+                <h5 class="mb-3">Ultimate Outcome</h5>
+                {% crispy forms.ultimate %}
+                <div class="d-block text-center mb-5">
+                    <button class="btn btn-inverse-blue" type="button">{% trans 'Save' %}</button>
+                </div>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="inter-tab" data-bs-toggle="tab" href="#intermediate-outcome" role="tab" aria-controls="intermediata-outcome" aria-selected="true">
+                        Intermediate Outcomes
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="immediate-tab" data-bs-toggle="tab" href="#immediate-outcome" role="tab" aria-controls="immediate-outcome" aria-selected="false">
+                        Immediate Outcomes
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="outputs-tab" data-bs-toggle="tab" href="#outputs" role="tab" aria-controls="outputs" aria-selected="false">
+                        Output
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content border border-top-0 p-3" id="myLM">
+                  <div class="tab-pane fade show active" id="intermediate-outcome" role="tabpanel" aria-labelledby="inter-tab">
+                      Intermediate outcome
+                  </div>
+                  <div class="tab-pane fade" id="immediate-outcome" role="tabpanel" aria-labelledby="immediate-tab">
+                      Immediate Outcome
+                  </div>
+                  <div class="tab-pane fade" id="outputs" role="tabpanel" aria-labelledby="outputs-tab">
+                      Outputs
+                  </div>
+                </div>
+                <div class="d-block text-center mt-3">
+                    <button class="btn btn-inverse-primary" type="button" id="btn-prev">Previous</button>
+                <button class="btn btn-inverse-blue" type="button" id="btn-next">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

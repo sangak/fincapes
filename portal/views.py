@@ -27,3 +27,26 @@ def no_response(request):
     data = dict()
     data['response'] = None
     return JsonResponse(data, safe=False)
+
+
+@csrf_exempt
+def check_session(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            checking = request.POST.get('checking')
+            try:
+                del request.session[checking]
+                return JsonResponse(
+                    {
+                        'message': 'succeed',
+                        'code': 200
+                    }, safe=False
+                )
+            except KeyError:
+                pass
+    return JsonResponse(
+        {
+            'message': 'failed',
+            'code': 400
+        }, safe=False
+    )
