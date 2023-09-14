@@ -72,8 +72,26 @@ class PreviousUrlMixin(object):
     def get_prev_url(self):
         request = self.request
         self.default_prev = request.path
-        request.session['balik'] = self.default_prev
+        request.session['previous_url'] = self.default_prev
+        request.session['is_action_done'] = False
         return self.default_prev
+
+
+class AddAnimationMixin(object):
+    prev_url = None
+    add_animation = False
+
+    def get_context_data(self, **kwargs):
+        request = self.request
+        if 'previous_url' in request.session:
+            self.prev_url = self.request.session['previous_url']
+            if not request.session['is_action_done']:
+                self.add_animation = True
+                request.session['is_action_done'] = True
+        context = super().get_context_data(**kwargs)
+        context['add_animation'] = self.add_animation
+        context['prev_path'] = self.prev_url
+        return context
 
 
 class NextUrlMixin(object):
