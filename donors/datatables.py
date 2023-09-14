@@ -13,10 +13,10 @@ class DonorAjaxListView(DatatableView):
     show_column_filters = False
 
     column_defs = [
-        {'name': 'title', 'title': _('Donor'), 'searchable': True, 'visible': True, "width": "45%", },
-        {'name': 'acronym', 'title': _('Acronym'), 'searchable': True, 'visible': True, },
-        {'name': 'status', 'title': 'Status', 'searchable': True, 'visible': True, },
-        {'name': 'actions', 'title': "", "orderable": False, "width": "10%", 'searchable': False, }
+        {'name': 'title', 'title': _('Donor'), 'orderable': True, 'searchable': True, 'visible': True, "width": "45%", },
+        {'name': 'acronym', 'title': _('Acronym'), 'orderable': True, 'searchable': True, 'visible': True, },
+        {'name': 'status', 'title': 'Status', 'orderable': True, 'searchable': True, 'visible': True, },
+        {'name': 'actions', 'title': "", "orderable": False, "width": "5%", 'searchable': False, }
     ]
 
     def get_initial_queryset(self, request=None):
