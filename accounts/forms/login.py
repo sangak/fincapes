@@ -6,6 +6,7 @@ from django.utils.translation import gettext as _
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Row, HTML, Column
 from crispy_forms.bootstrap import FieldWithButtons
+from crispy_bootstrap5.bootstrap5 import FloatingField
 from fincapes.helpers import email_validator, Submit
 
 User = get_user_model()
