@@ -8,7 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 from fincapes.mixins import ContextDataMixin, PreviousUrlMixin, ContextNoDataMixin, AddAnimationMixin
 from ..models import UltimateOutcome, IntermediateOutcome, ImmediateOutcome, Output
 from ..forms import (
-    ProjectModelForm, UltimateBSOutcomeForm, IntermediateBSOutcomeForm
+    ProjectModelForm, UltimateBSOutcomeForm, IntermediateBSOutcomeForm,
+    ImmediateBSOutcomeForm, OutputBSForm
 )
 
 
@@ -88,10 +89,6 @@ class IntermediateBSUpdateView(LoginRequiredMixin, BSModalUpdateView):
             return qs.first()
         return None
 
-    def form_invalid(self, form):
-        print(form.errors)
-        return super().form_invalid(form)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['modal_title'] = 'Intermediate Outcome'
@@ -103,6 +100,64 @@ def intermediate_response(request, uid):
     data = dict()
     if request.method == 'GET':
         qs = IntermediateOutcome.objects.filter(uid=uid)
+        if qs.exists():
+            obj = qs.first()
+            data['response'] = obj.description
+    return JsonResponse(data)
+
+
+class ImmediateBSUpdateView(LoginRequiredMixin, BSModalUpdateView):
+    template_name = 'projects/commitment-create.html'
+    form_class = ImmediateBSOutcomeForm
+    success_url = reverse_lazy('project:logic-model-index')
+
+    def get_object(self, queryset=None):
+        uid = self.kwargs.pop('uid', None)
+        qs = ImmediateOutcome.objects.filter(uid=uid)
+        if qs.exists():
+            return qs.first()
+        return None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['modal_title'] = 'Immediate Outcome'
+        return context
+
+
+@csrf_exempt
+def immediate_response(request, uid):
+    data = dict()
+    if request.method == 'GET':
+        qs = ImmediateOutcome.objects.filter(uid=uid)
+        if qs.exists():
+            obj = qs.first()
+            data['response'] = obj.description
+    return JsonResponse(data)
+
+
+class OutputBSUpdateView(LoginRequiredMixin, BSModalUpdateView):
+    template_name = 'projects/commitment-create.html'
+    form_class = OutputBSForm
+    success_url = reverse_lazy('project:logic-model-index')
+
+    def get_object(self, queryset=None):
+        uid = self.kwargs.pop('uid', None)
+        qs = Output.objects.filter(uid=uid)
+        if qs.exists():
+            return qs.first()
+        return None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['modal_title'] = 'Outputs'
+        return context
+
+
+@csrf_exempt
+def output_response(request, uid):
+    data = dict()
+    if request.method == 'GET':
+        qs = Output.objects.filter(uid=uid)
         if qs.exists():
             obj = qs.first()
             data['response'] = obj.description

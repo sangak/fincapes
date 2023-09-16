@@ -60,8 +60,12 @@
                                 <tr>
                                     {% for imme in immediate %}
                                         <th class="logic">
-                                            <a id="{{ imme.uid }}">{{ imme.code }}</a> <br/>
-                                            {{ imme.description }}
+                                            <a id="{{ imme.uid }}" class="bsUpdate"
+                                               data-form-url="{{ imme.get_absolute_url }}"
+                                               data-async-update="true"
+                                               data-element-id="#logic-{{ imme.uid }}"
+                                               data-response-url="{% url 'project:update-ajax-immediate' imme.uid     %}"
+                                            >{{ imme.code }}</a> <span id="logic-{{ imme.uid }}">{{ imme.description }}</span>
                                         </th>
                                     {% endfor %}
                                 </tr>
@@ -78,8 +82,12 @@
                                             {% for output in outputs %}
                                                 {% if imme == output.imme_outcome %}
                                                     <li>
-                                                        <a id="{{ output.uid }}">{{ output.code }}</a> <br/>
-                                                        {{ output.description }}
+                                                        <a id="{{ output.uid }}" class="bsUpdate"
+                                                           data-form-url="{{ output.get_absolute_url }}"
+                                                           data-async-update="true"
+                                                           data-element-id="#logic-{{ output.uid }}"
+                                                           data-response-url="{% url 'project:update-ajax-output' output.uid     %}"
+                                                        >{{ output.code }}</a> <span id="logic-{{ output.uid }}">{{ output.description }}</span>
                                                     </li>
                                                 {% endif %}
                                             {% endfor %}

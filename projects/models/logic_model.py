@@ -134,6 +134,9 @@ class ImmediateOutcome(models.Model):
     def __str__(self):
         return self.description
 
+    def get_absolute_url(self):
+        return reverse_lazy('project:update-immediate', kwargs={'uid': self.uid})
+
 
 def pre_save_immediate_outcome(instance, *args, **kwargs):
     if not instance.uid:
@@ -178,6 +181,9 @@ class Output(models.Model):
 
     def __str__(self):
         return self.description
+
+    def get_absolute_url(self):
+        return reverse_lazy('project:update-output', kwargs={'uid': self.uid})
 
 
 def pre_save_output(instance, *args, **kwargs):

@@ -4,7 +4,8 @@ from .project_info import (
 )
 from .lm_framework import (
     LogicModelHomeView, UltimateBSUpdateView, ultimate_response,
-    IntermediateBSUpdateView, intermediate_response
+    IntermediateBSUpdateView, intermediate_response,
+    ImmediateBSUpdateView, immediate_response, OutputBSUpdateView, output_response
 )
 
 __all__ = [
@@ -12,5 +13,7 @@ __all__ = [
     'CommitmentBSUpdateView', 'CommitmentBSDeleteView',
 
     'LogicModelHomeView', 'UltimateBSUpdateView', 'ultimate_response',
-    'IntermediateBSUpdateView', 'intermediate_response'
+    'IntermediateBSUpdateView', 'intermediate_response',
+    'ImmediateBSUpdateView', 'immediate_response', 'OutputBSUpdateView',
+    'output_response'
 ]

@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import gettext as _
 from .models import Project
 from django.utils.safestring import mark_safe
-from bootstrap_modal_forms.forms import BSModalModelForm
+from bootstrap_modal_forms.forms import BSModalModelForm, BSModalForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Column, Row, Div, HTML, Fieldset
 from crispy_forms.bootstrap import StrictButton, FieldWithButtons
@@ -10,7 +10,10 @@ from django_select2.forms import Select2Widget, ModelSelect2Widget
 from fincapes.helpers import check_date_valid
 from fincapes.variables import label_settings, CURRENCY_CHOICES, SELECT_WIDGET_ATTRS
 from donors.models import Donor
-from .models import Commitment, UltimateOutcome, IntermediateOutcome
+from .models import (
+    Commitment, UltimateOutcome, IntermediateOutcome,
+    ImmediateOutcome, Output
+)
 
 
 class ProjectModelForm(forms.ModelForm):
@@ -108,16 +111,6 @@ class ProjectModelForm(forms.ModelForm):
         if correct:
             return new_date
         return None
-
-    # def save(self, commit=True):
-    #     project = super().save(commit=False)
-    #     if commit:
-    #         st_true, new_start = check_date_valid(self.cleaned_data.get('pro_start'))
-    #         et_true, new_end = check_date_valid(self.cleaned_data.get('pro_end'))
-    #         project.project_start = new_start
-    #         project.project_end = new_end
-    #         project.save()
-    #     return project
 
 
 class CommitmentBSModelForm(BSModalModelForm):
@@ -253,6 +246,104 @@ class IntermediateBSOutcomeForm(BSModalModelForm):
 
     class Meta:
         model = IntermediateOutcome
+        fields = ['code', 'description']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-3'
+        self.helper.field_class = 'col-lg-9'
+        self.helper.layout = Layout(
+            Div(
+                Div(
+                    Div('code'),
+                    css_class='form-group'
+                ),
+                Div(
+                    Div('description', css_class='col-lg-12'),
+                    css_class='form-group'
+                ),
+                css_class='modal-body mb-0 pb-0'
+            ),
+            Div(
+                StrictButton(
+                    _('Save'), type="submit", css_class='btn btn-inverse-blue'
+                ),
+                css_class='modal-footer text-end border-top-0'
+            )
+        )
+
+
+class ImmediateBSOutcomeForm(BSModalModelForm):
+    code = forms.CharField(
+        label=_('Code'),
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'w-25'
+        })
+    )
+    description = forms.CharField(
+        label=_('Description'),
+        required=False,
+        widget=forms.Textarea(attrs={
+            'placeholder': _('Description'),
+            'class': 'no-resize',
+            'rows': 5
+        })
+    )
+
+    class Meta:
+        model = ImmediateOutcome
+        fields = ['code', 'description']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-3'
+        self.helper.field_class = 'col-lg-9'
+        self.helper.layout = Layout(
+            Div(
+                Div(
+                    Div('code'),
+                    css_class='form-group'
+                ),
+                Div(
+                    Div('description', css_class='col-lg-12'),
+                    css_class='form-group'
+                ),
+                css_class='modal-body mb-0 pb-0'
+            ),
+            Div(
+                StrictButton(
+                    _('Save'), type="submit", css_class='btn btn-inverse-blue'
+                ),
+                css_class='modal-footer text-end border-top-0'
+            )
+        )
+
+
+class OutputBSForm(BSModalModelForm):
+    code = forms.CharField(
+        label=_('Code'),
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'w-25'
+        })
+    )
+    description = forms.CharField(
+        label=_('Description'),
+        required=False,
+        widget=forms.Textarea(attrs={
+            'placeholder': _('Description'),
+            'class': 'no-resize',
+            'rows': 5
+        })
+    )
+
+    class Meta:
+        model = Output
         fields = ['code', 'description']
 
     def __init__(self, *args, **kwargs):
