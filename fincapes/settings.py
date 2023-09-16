@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'thumbnails',
 
     'accounts',
+    'awp',
     'articles',
     'contents',
     'donors',
