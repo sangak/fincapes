@@ -10,5 +10,8 @@ urlpatterns = [
     path('commitment-update/<uid>/', views.CommitmentBSUpdateView.as_view(), name='update-commitment'),
     path('commitment-delete/<pk>/', views.CommitmentBSDeleteView.as_view(), name='delete-commitment'),
     path('logic-model/', views.LogicModelHomeView.as_view(), name='logic-model-index'),
-    path('logic-model/add-ultimate/', views.AddLogicModelView.as_view(), name='add-logic')
+    path('logic-model/ultimate/<uid>/', views.UltimateBSUpdateView.as_view(), name='update-ultimate'),
+    path('logic-model/intermediate/<uid>/', views.IntermediateBSUpdateView.as_view(), name='update-intermediate'),
+    path('logic-model/update-ultimate-ajax/<uid>/', views.ultimate_response, name='update-ajax-ultimate'),
+    path('logic-model/update-intermediate-ajax/<uid>/', views.intermediate_response, name='update-ajax-intermediate')
 ]

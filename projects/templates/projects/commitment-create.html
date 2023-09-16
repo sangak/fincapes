@@ -3,8 +3,12 @@
 {% crispy form %}
 <script>
     $(document).ready(function () {
+        let select2 = $('.django-select2');
         $('.modal').on('shown.bs.modal', function (ev) {
-            $('.django-select2').djangoSelect2();
+            if (select2.length) {
+                $('.django-select2').djangoSelect2();
+            }
+
             ev.preventDefault();
         })
     })

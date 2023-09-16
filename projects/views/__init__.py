@@ -3,11 +3,14 @@ from .project_info import (
     CommitmentBSDeleteView
 )
 from .lm_framework import (
-    LogicModelHomeView, AddLogicModelView
+    LogicModelHomeView, UltimateBSUpdateView, ultimate_response,
+    IntermediateBSUpdateView, intermediate_response
 )
 
 __all__ = [
     'ProjectHomeView', 'CommitmentBSCreateView',
     'CommitmentBSUpdateView', 'CommitmentBSDeleteView',
-    'LogicModelHomeView', 'AddLogicModelView'
+
+    'LogicModelHomeView', 'UltimateBSUpdateView', 'ultimate_response',
+    'IntermediateBSUpdateView', 'intermediate_response'
 ]

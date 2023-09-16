@@ -10,7 +10,7 @@ from django_select2.forms import Select2Widget, ModelSelect2Widget
 from fincapes.helpers import check_date_valid
 from fincapes.variables import label_settings, CURRENCY_CHOICES, SELECT_WIDGET_ATTRS
 from donors.models import Donor
-from .models import Commitment, UltimateOutcome
+from .models import Commitment, UltimateOutcome, IntermediateOutcome
 
 
 class ProjectModelForm(forms.ModelForm):
@@ -181,7 +181,7 @@ class CommitmentBSModelForm(BSModalModelForm):
         return commitment
 
 
-class UltimateOutcomeForm(forms.ModelForm):
+class UltimateBSOutcomeForm(BSModalModelForm):
     project = forms.ModelChoiceField(
         label=_('Project name'),
         required=False,
@@ -202,7 +202,7 @@ class UltimateOutcomeForm(forms.ModelForm):
         widget=forms.Textarea(attrs={
             'placeholder': _('Description'),
             'class': 'no-resize',
-            'rows': 5
+            'rows': 4
         })
     )
 
@@ -214,9 +214,69 @@ class UltimateOutcomeForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
-            Row(
-                Column('project', css_class='col-lg-8'),
-                Column('code', css_class='col-lg-4')
+            Div(
+                Row(
+                    Column('project', css_class='col-lg-8'),
+                    Column('code', css_class='col-lg-4')
+                ),
+                Row(Column('description')),
+                css_class='modal-body'
             ),
-            Row('description')
+            Div(
+                Column(
+                    StrictButton(
+                        _('Save'), type="submit", css_class='btn btn-inverse-blue'
+                    )
+                ),
+                css_class='modal-footer border-top-0 text-end'
+            )
+        )
+
+
+class IntermediateBSOutcomeForm(BSModalModelForm):
+    code = forms.CharField(
+        label=_('Code'),
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'w-25'
+        })
+    )
+    description = forms.CharField(
+        label=_('Description'),
+        required=False,
+        widget=forms.Textarea(attrs={
+            'placeholder': _('Description'),
+            'class': 'no-resize',
+            'rows': 5
+        })
+    )
+
+    class Meta:
+        model = IntermediateOutcome
+        fields = ['code', 'description']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-3'
+        self.helper.field_class = 'col-lg-9'
+        self.helper.layout = Layout(
+            Div(
+                Div(
+                    Div('code'),
+                    css_class='form-group'
+                ),
+                Div(
+                    Div('description', css_class='col-lg-12'),
+                    css_class='form-group'
+                ),
+                css_class='modal-body mb-0 pb-0'
+            ),
+            Div(
+                StrictButton(
+                    _('Save'), type="submit", css_class='btn btn-inverse-blue'
+                ),
+                css_class='modal-footer text-end border-top-0'
+            )
         )

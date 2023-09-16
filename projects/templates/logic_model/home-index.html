@@ -6,11 +6,106 @@
         <h4 class="mb-3 mb-md-0">Logic Model</h4>
         <span class="badge bg-success text-white" id="save-me" style="display: none">{% trans 'Saving process ...' %}</span>
     </div>
-    <div class="row pb-0">
-        <div class="col-lg-12 stretch-card mb-0 ">
+    <div class="row">
+        <div class="col-lg-12 mb-3">
             <div class="card overflow-hidden">
-                <div class="card-body">
-                    <div class="main-menu-icon">
+                <div class="card-body pb-2">
+                    <div class="table-responsive">
+                        <table class="table" id="lm-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="{{ immediate.count }}" class="text-center">
+                                        <h5>{{ ultimate.project.title }} ({{ ultimate.project.acronym }})</h5>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="sub-title">
+                                    <th colspan="{{ immediate.count }}">Ultimate Outcome</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="{{ immediate.count }}" class="logic">
+                                        <a id="{{ ultimate.uid }}" class="bsUpdate"
+                                           data-form-url="{{ ultimate.get_absolute_url }}"
+                                           data-async-update="true"
+                                           data-element-id="#logic-{{ ultimate.uid }}"
+                                           data-response-url="{% url 'project:update-ajax-ultimate' ultimate.uid     %}"
+                                        >{{ ultimate.code }}</a> <span id="logic-{{ ultimate.uid }}">{{ ultimate.description }}</span>
+                                    </th>
+                                </tr>
+                                <tr id="sub-title">
+                                    <th colspan="{{ immediate.count }}">
+                                        Intermediate Outcomes
+                                        <em>(results expected by the end of the project)</em>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    {% for inter in intermediate %}
+                                        <th colspan="{{ inter.get_children_count }}" class="logic">
+                                            <a id="{{ inter.uid }}" class="bsUpdate"
+                                               data-form-url="{{ inter.get_absolute_url }}"
+                                               data-async-update="true"
+                                               data-element-id="#logic-{{ inter.uid }}"
+                                               data-response-url="{% url 'project:update-ajax-intermediate' inter.uid     %}"
+                                            >{{ inter.code }}</a> <span id="logic-{{ inter.uid }}">{{ inter.description }}</span>
+                                        </th>
+                                    {% endfor %}
+                                </tr>
+                                <tr id="sub-title">
+                                    <th colspan="{{ immediate.count }}">
+                                        Immediate Outcomes
+                                        <em>(short-term results)</em>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    {% for imme in immediate %}
+                                        <th class="logic">
+                                            <a id="{{ imme.uid }}">{{ imme.code }}</a> <br/>
+                                            {{ imme.description }}
+                                        </th>
+                                    {% endfor %}
+                                </tr>
+                                <tr id="sub-title">
+                                    <th colspan="{{ immediate.count }}">
+                                        Outputs
+                                        <em>(completed activities or services)</em>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    {% for imme in immediate %}
+                                        <th class="logic">
+                                            <ul id="listLM">
+                                            {% for output in outputs %}
+                                                {% if imme == output.imme_outcome %}
+                                                    <li>
+                                                        <a id="{{ output.uid }}">{{ output.code }}</a> <br/>
+                                                        {{ output.description }}
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </ul>
+                                        </th>
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $(document).ready(function () {
+        $.FincapesCore.helpers.bsUpdate($('.bsUpdate'));
+    })
+</script>
+{% endblock %}
+
+<div class="main-menu-icon">
                         <ul>
                             <li>
                                 <a class="ultimate" id="btn-main-menu-icon" data-href="{% url 'project:add-logic' %}">
@@ -20,9 +115,3 @@
                             </li>
                         </ul>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}

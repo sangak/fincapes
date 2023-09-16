@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Max
+from django.urls import reverse_lazy
 from django.db.models.signals import pre_save
 from django.contrib.auth import get_user_model
 from fincapes.utils import unique_id_generator
@@ -23,6 +24,10 @@ class UltimateOutcome(models.Model):
 
     def __str__(self):
         return self.description
+
+    def get_absolute_url(self):
+        uid = self.uid
+        return reverse_lazy('project:update-ultimate', kwargs={'uid': uid})
 
 
 def pre_save_ultimate_outcome(instance, *args, **kwargs):
@@ -50,6 +55,10 @@ class IntermediateOutcomeManager(models.Manager):
         max_code = self.all().aggregate(Max('code'))['code__max']
         return int(parent.code) + int(max_code) + 100
 
+    def get_col_x(self):
+        qs = self.get_queryset().count()
+        return int(12 / qs)
+
     def all(self):
         return self.get_queryset().recent().all()
 
@@ -69,6 +78,14 @@ class IntermediateOutcome(models.Model):
     def __str__(self):
         return self.description
 
+    @property
+    def get_children_count(self):
+        immediate = ImmediateOutcome.objects.filter(inter_outcome=self)
+        return immediate.count()
+
+    def get_absolute_url(self):
+        return reverse_lazy('project:update-intermediate', kwargs={'uid': self.uid})
+
 
 def pre_save_intermediate_outcome(instance, *args, **kwargs):
     if not instance.uid:
@@ -86,6 +103,9 @@ class ImmediateOutcomeQueryset(models.query.QuerySet):
 class ImmediateOutcomeManager(models.Manager):
     def get_queryset(self):
         return ImmediateOutcomeQueryset(self.model, using=self._db)
+
+    def get_total(self):
+        return self.get_queryset().count()
 
     def all(self):
         return self.get_queryset().recent()
