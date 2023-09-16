@@ -125,3 +125,7 @@ ADDRESS_CHOICES = (
 page_title = {
     'project_info': _('Project Information')
 }
+
+sorted_str = "abcdefghijklmnopqrstuvwxyz"
+sorted_str_ = iter(sorted_str)
+CHOICES_STR = dict(zip(sorted_str_, sorted_str_))
