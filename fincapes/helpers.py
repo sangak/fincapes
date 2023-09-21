@@ -105,6 +105,7 @@ def check_date_valid(s, auto_lang=False):
         lang = get_language()
     else:
         lang = 'id'
+
     try:
         if lang == 'id':
             year = date_list[2]

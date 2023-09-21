@@ -19,8 +19,6 @@ class ProjectHomeView(LoginRequiredMixin, ContextDataMixin, UpdateView):
         return qs
 
     def get_context_data(self, **kwargs):
-        request = self.request
-        request.session['project'] = self.get_object().uid
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Project Information | ' + context['page_title']
         context['uri'] = 'projects:general-info'

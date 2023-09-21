@@ -34,7 +34,7 @@
                   <a href="{% url 'project:logic-model-index' %}" class="nav-link{% if 'logic-model' in uri %} active{% endif %}">Logic Model</a>
                 </li>
                 <li class="nav-item">
-                  <a href="pages/email/compose.html" class="nav-link">Annual Work Plan</a>
+                  <a href="{% url 'awp:index' %}" class="nav-link{% if 'awp' in uri %} active{% endif %}">Annual Work Plan</a>
                 </li>
               </ul>
             </div>

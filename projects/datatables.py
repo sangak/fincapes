@@ -20,7 +20,7 @@ class CommitmentAjaxListView(DatatableView):
 
     def get_initial_queryset(self, request=None):
         parent_uid = request.session.get('project')
-        return Commitment.objects.filter(project__uid=parent_uid).all()
+        return Commitment.objects.filter(project__uid=parent_uid)
 
     def customize_row(self, row, obj):
         amount = currency(obj.amount)

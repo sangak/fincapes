@@ -1,4 +1,5 @@
 import datetime
+import pendulum
 import os
 import pytz
 import random
@@ -29,11 +30,20 @@ def convert_string_to_datetime(date_string):
     return date_
 
 
-def get_time_diff(instance):
+def get_time_diff(instance, interval='years'):
     start = instance.date_start
     end = instance.date_end
-    timediff = end - start
-    return timediff.days
+
+    start_date = pendulum.date(start.year, start.month, start.day)
+    end_date = pendulum.date(end.year, end.month, end.day)
+    timediff = end_date - start_date
+    if interval == 'years':
+        diff_ = timediff.years
+    elif interval == 'months':
+        diff_ = timediff.months
+    else:
+        diff_ = timediff.days
+    return diff_
 
 
 def get_due_date_time(date_model, skip, include_time=True):

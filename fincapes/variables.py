@@ -113,6 +113,7 @@ SELECT_WIDGET_MODEL_NO_SEARCH_ATTRS = {
     "data-allow-clear": False
 }
 SELECT_WIDGET_MODEL_WITH_SEARCH_ATTRS = {
+    # 'data-minimum-results-for-search': 'Infinity',
     "data-minimum-input-length": 0,
     "data-allow-clear": False
 }
@@ -127,5 +128,5 @@ page_title = {
 }
 
 sorted_str = "abcdefghijklmnopqrstuvwxyz"
-sorted_str_ = iter(sorted_str)
-CHOICES_STR = dict(zip(sorted_str_, sorted_str_))
+sorted_str_ = [x for x in sorted_str]
+CHOICES_STR = tuple(zip(sorted_str_, sorted_str_))

@@ -17,6 +17,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="{% static 'css/portal-style.css' %}">
     <script src="{% static 'js/core.js' %}"></script>
+    <script src="{% static 'js/htmx-min.js' %}"></script>
+
 </head>
 <body{% if add_animation %} class="add-animation"{% endif %}{% if css_id %} id="{{ css_id }}"{% endif %}>
     <div class="main-wrapper">
@@ -42,6 +44,7 @@
     <script src="{% static 'js/fincapes.js' %}"></script>
     <script src="{% static 'js/portal-app.js' %}"></script>
     <script src="{% static 'js/portal.js' %}"></script>
+    <script src="{% static 'js/select2.full.min.js' %}"></script>
     <script>
         $(function() {
           if($('#datePickerExample').length) {

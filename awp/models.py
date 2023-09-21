@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import Max
 from django.db.models.signals import pre_save
 from django.contrib.auth import get_user_model
-from projects.models import Output
+from projects.models import Output, Project
 from fincapes.utils import unique_id_generator
 from fincapes import variables
 
@@ -37,6 +37,14 @@ class SubActivity(models.Model):
         return self.title
 
 
+def pre_save_sub_activity(instance, *args, **kwargs):
+    if not instance.uid:
+        instance.uid = unique_id_generator(instance)
+
+
+pre_save.connect(pre_save_sub_activity, sender=SubActivity)
+
+
 class AwpQuerySet(models.query.QuerySet):
     def recent(self):
         return self.order_by('timestamp')
@@ -46,8 +54,8 @@ class AwpManager(models.Manager):
     def get_queryset(self):
         return AwpQuerySet(self.model, using=self._db)
 
-    def all(self):
-        return self.get_queryset().recent()
+    # def all(self):
+    #     return self.get_queryset().recent().all()
 
     def new_num(self, output=None):
         qs = self.all().filter(output=output)
@@ -58,10 +66,12 @@ class AwpManager(models.Manager):
 
 
 class Awp(models.Model):
+    # project = models.ForeignKey(Project, on_delete=models.DO_NOTHING, null=True, related_name='awp-project')
     output = models.ForeignKey(Output, on_delete=models.DO_NOTHING, null=True, related_name='awp')
     uid = models.CharField(max_length=64, unique=True, editable=False)
     sorted_num = models.SmallIntegerField(null=True, blank=True)
     title = models.TextField(null=True)
+    year = models.CharField(max_length=4, null=True, blank=True)
     sub_activity = models.ManyToManyField(SubActivity, related_name='awp_output')
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

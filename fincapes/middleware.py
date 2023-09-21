@@ -50,3 +50,17 @@ class DefaultLanguageMiddle(MiddlewareMixin):
             patch_vary_headers(response, ("Accept-Language",))
         response.headers.setdefault("Content-Language", language)
         return response
+
+
+class AjaxMiddleware(MiddlewareMixin):
+    def __init__(self, get_response):
+        super().__init__(get_response)
+        self.get_response = get_response
+
+    def __call__(self, request):
+        def is_ajax(self):
+            return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+        request.is_ajax = is_ajax.__get__(request)
+        response = self.get_response(request)
+        return response

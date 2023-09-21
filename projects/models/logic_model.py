@@ -180,10 +180,16 @@ class Output(models.Model):
     objects = OutputQueryset()
 
     def __str__(self):
-        return self.description
+        return f"{self.code} {self.description}"
 
     def get_absolute_url(self):
         return reverse_lazy('project:update-output', kwargs={'uid': self.uid})
+
+    @property
+    def full_output(self):
+        code = self.code
+        desc = self.description
+        return f"{code} {desc}"
 
 
 def pre_save_output(instance, *args, **kwargs):

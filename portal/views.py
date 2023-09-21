@@ -6,10 +6,11 @@ from django.http import JsonResponse
 from fincapes.mixins import (
     NextUrlMixin, PreviousUrlMixin, ContextDataMixin
 )
+from awp.models import Output, Awp
 from fincapes.variables import aplikasi
 
 
-class HomeDashboardView(PreviousUrlMixin, NextUrlMixin, LoginRequiredMixin, ContextDataMixin, TemplateView):
+class HomeDashboardView(LoginRequiredMixin, ContextDataMixin, TemplateView):
     template_name = 'portal/dashboard.html'
     month = None
 
@@ -18,7 +19,6 @@ class HomeDashboardView(PreviousUrlMixin, NextUrlMixin, LoginRequiredMixin, Cont
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Dashboard | ' + context['page_title']
         context['uri'] = 'portal'
-        context['prev_url'] = self.get_prev_url()
         return context
 
 
@@ -50,3 +50,18 @@ def check_session(request):
             'code': 400
         }, safe=False
     )
+
+
+def storenum_from_output(request):
+    user = request.user
+    if user.is_authenticated:
+        if request.method == 'POST' and request.is_ajax:
+            output_pk = request.POST.get('output')
+            qs = Output.objects.filter(pk=output_pk)
+            if qs.exists():
+                obj = qs.first()
+                new_num = Awp.objects.new_num(obj)
+    data = {
+        'message': f'{obj.code}.{new_num}'
+    }
+    return JsonResponse(data, safe=False)

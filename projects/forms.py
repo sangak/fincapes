@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import gettext as _
 from .models import Project
 from django.utils.safestring import mark_safe
-from bootstrap_modal_forms.forms import BSModalModelForm, BSModalForm
+from bootstrap_modal_forms.forms import BSModalModelForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Column, Row, Div, HTML, Fieldset
 from crispy_forms.bootstrap import StrictButton, FieldWithButtons
@@ -29,7 +29,7 @@ class ProjectModelForm(forms.ModelForm):
         required=False,
         widget=forms.TextInput()
     )
-    project_start = forms.CharField(
+    date_start = forms.CharField(
         label="",
         required=False,
         widget=forms.TextInput(attrs={
@@ -38,7 +38,7 @@ class ProjectModelForm(forms.ModelForm):
             'id': 'start-date'
         })
     )
-    project_end = forms.CharField(
+    date_end = forms.CharField(
         label="",
         required=False,
         widget=forms.TextInput(attrs={
@@ -60,15 +60,15 @@ class ProjectModelForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ['title', 'acronym', 'brief_description',
-                  'project_start', 'project_end'
+                  'date_start', 'date_end'
                   ]
 
     def __init__(self, *args, **kwargs):
         instance = kwargs.get('instance', None)
         if instance:
             kwargs['initial'] = {
-                'project_start': instance.get_local_project_start('id'),
-                'project_end': instance.get_local_project_end('id')
+                'date_start': instance.get_local_project_start('id'),
+                'date_end': instance.get_local_project_end('id')
             }
         # if instance:
         #     # self.fields['title'].widget.attrs['readonly'] = True
@@ -86,8 +86,8 @@ class ProjectModelForm(forms.ModelForm):
                 Fieldset(
                     _('Project period'),
                     Row(
-                        Column('project_start', css_class='col-lg-2'),
-                        Column('project_end', css_class='col-lg-2')
+                        Column('date_start', css_class='col-lg-2'),
+                        Column('date_end', css_class='col-lg-2')
                     ),
                     css_class='date-picker', data_inputs='.date-period'
                 ),
@@ -98,15 +98,15 @@ class ProjectModelForm(forms.ModelForm):
             )
         )
 
-    def clean_project_start(self):
-        start = self.cleaned_data.get('project_start')
+    def clean_date_start(self):
+        start = self.cleaned_data.get('date_start')
         correct, new_date = check_date_valid(start)
         if correct:
             return new_date
         return None
 
-    def clean_project_end(self):
-        end = self.cleaned_data.get('project_end')
+    def clean_date_end(self):
+        end = self.cleaned_data.get('date_end')
         correct, new_date = check_date_valid(end)
         if correct:
             return new_date

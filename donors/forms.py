@@ -47,7 +47,8 @@ class DonorBSModelForm(BSModalModelForm):
         model = Donor
         fields = ['title', 'acronym', 'status']
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, created, *args, **kwargs):
+        self.created = created
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
@@ -87,6 +88,17 @@ class DonorBSModelForm(BSModalModelForm):
         if not acronym:
             raise forms.ValidationError(label_settings.get('no_blank') % _('Acronym'))
         return acronym
+
+    def save(self, commit=True):
+        donor = super().save(commit=False)
+        user = self.request.user
+        if commit:
+            if self.created:
+                donor.added_by = user
+            else:
+                donor.modified_by = user
+            donor.save()
+        return donor
 
 
 class DonorBSDeleteForm(forms.ModelForm):

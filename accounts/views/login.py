@@ -14,6 +14,7 @@ from fincapes.helpers import remove_session
 from fincapes.mixins import (
     NextUrlMixin, RequestFormAttachMixin, ContextNoDataMixin
 )
+from projects.models import Project
 from ..forms import LoginForm, RegistrationForm
 from fincapes.variables import aplikasi
 
@@ -36,8 +37,9 @@ class LoginRequestView(ContextNoDataMixin, NextUrlMixin, LoginView):
 
     def form_valid(self, form):
         next_path = self.get_next_url()
-        print(next_path)
         user = self.request.user
+        project = Project.objects.first()
+        self.request.session['project'] = project.uid
         if user.invited_user:
             if not user.has_change_password:
                 pass

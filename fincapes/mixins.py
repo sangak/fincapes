@@ -72,6 +72,10 @@ class PreviousUrlMixin(object):
     def get_prev_url(self):
         request = self.request
         self.default_prev = request.path
+        # if not 'previous_url' in request.session:
+        #     request.session['previous_url'] = [self.default_prev]
+        # else:
+        #     request.session['previous_url'] += [self.default_prev]
         request.session['previous_url'] = self.default_prev
         request.session['is_action_done'] = False
         return self.default_prev

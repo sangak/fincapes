@@ -46,6 +46,7 @@
                 var config = {
                     formURL: null,
                     asyncUpdate: false,
+                    modalID: '#modal',
                     errorClass: '.is-invalid',
                     isDeleteForm: false,
                     asyncSettings: {
@@ -68,6 +69,7 @@
                             $(this).modalForm({
                                 formURL: $(this).data('form-url'),
                                 errorClass: config.errorClass,
+                                modalID: $(this).data('modal-id') ? $(this).data('modal-id') : config.modalID,
                                 asyncUpdate: $(this).data('async-update') ? $(this).data('async-update') : config.asyncUpdate,
                                 isDeleteForm: $(this).data('is-delete') ? $(this).data('is-delete') : config.isDeleteForm,
                                 asyncSettings: {
@@ -135,7 +137,7 @@
                             "<'#toolbar'>><'col-lg-3 col-sm-6'>><'row'<'col-sm-12'tr>>" +
                             "<'row'<'col-sm-5'i><'col-sm-7'p>>"
                 } else {
-                    customDom = "<'row mb-3'<'col-lg-10 col-sm-7'><'col-lg-2 col-sm-5'<'#btn-actions'>>>" +
+                    customDom = "<'row mb-3'<'col-lg-10 col-sm-7'><'col-lg-2 col-sm-5 text-end'<'#btn-actions'>>>" +
                                 "<'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>"
                 }
 
@@ -144,19 +146,21 @@
                         feather.replace()
                         $.FincapesCore.helpers.bsUpdate($('tbody tr a#btn-bs-crud'));
                         $.FincapesCore.helpers.bsUpdate($('tbody tr a#btn-bs-delete'));
-                        //$.FincapesCore.components.bsUpdate.init($('tbody tr a#btn-bs-delete'));
                     })
                     $this.on('rowCallback', function (table, row, data) {
 
                     });
                     $this.on('initComplete', function (settings) {
                         feather.replace()
+                        var modalId;
+                        modalId = $this.data('modal-id') ? $this.data('modal-id') : '#modal';
                         let btnAdd = '<button type="button" ' +
                             'class="btn btn-primary btn-icon-text mb-2 mb-md-0 pt-1 pb-1" ' +
                             'data-form-url="' + $this.attr('data-add-url') +'" id="btn-bs-add" ' +
                             'data-async-update="true" ' +
                             'data-element-id="#' + $this.attr('id') + '" ' +
                             'data-key="table" ' +
+                            'data-modal-id="' + modalId  + '" ' +
                             'data-response-url="' + $this.attr('data-response-url') + '">' +
                             '<i class="mdi mdi-plus me-1"></i>' + $this.attr('data-add-btn-title') +
                             '</button>'

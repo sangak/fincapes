@@ -4,7 +4,7 @@ from django.db.models.signals import pre_save
 from django.contrib.auth import get_user_model
 from donors.models import Donor
 from fincapes.helpers import get_locale_date
-from fincapes.utils import unique_id_generator, unique_slug_generator, currency
+from fincapes.utils import unique_id_generator, unique_slug_generator, currency, get_time_diff
 from fincapes.variables import CURRENCY_CHOICES
 
 User = get_user_model()
@@ -40,8 +40,8 @@ class Project(models.Model):
     title = models.CharField(max_length=255, blank=True, null=True)
     acronym = models.CharField(max_length=20, blank=True, null=True)
     slug = models.SlugField(max_length=300, blank=True, null=True)
-    project_start = models.DateField(null=True)
-    project_end = models.DateField(null=True)
+    date_start = models.DateField(null=True)
+    date_end = models.DateField(null=True)
     brief_description = models.TextField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -55,13 +55,24 @@ class Project(models.Model):
 
     # @property
     def get_local_project_start(self, bhs=None):
-        start = self.project_start
+        start = self.date_start
         return get_locale_date(start, bhs=bhs)
 
     # @property
     def get_local_project_end(self, bhs=None):
-        end = self.project_end
+        end = self.date_end
         return get_locale_date(end, bhs=bhs)
+
+    @property
+    def get_period_years(self):
+        years = get_time_diff(self, interval='years')
+        start = self.date_start.year
+        end_ = self.date_end.year
+        period = [start + i for i in range(years)]
+        year_list = [str(x) for x in period]
+        if not end_ in year_list:
+            year_list.append(end_)
+        return year_list
 
     @property
     def total_amount(self):

@@ -88,6 +88,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_htmx.middleware.HtmxMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'fincapes.middleware.AjaxMiddleware'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -205,8 +206,8 @@ SESSION_COOKIE_AGE = 604800  # 1 week
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 SELECT2_CACHE_BACKEND = 'select2'
-SELECT2_CSS = ''
-
+SELECT2_CSS = []
+SELECT2_JS = []
 AJAX_DATATABLE_MAX_COLUMNS = 30
 AJAX_DATATABLE_TRACE_COLUMNDEFS = False               #  enables debug tracing of applied column defs
 AJAX_DATATABLE_TRACE_QUERYDICT = False                #  enables debug tracing of datatables requests

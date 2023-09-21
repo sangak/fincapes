@@ -1,0 +1,31 @@
+{% load crispy_forms_tags %}
+{% include 'modal-header.html' %}
+{% crispy forms.form %}
+<script>
+    $(document).ready(function () {
+        let $select2 = $('.django-select2');
+        $('.modal').on('shown.bs.modal', function (e) {
+            if ($select2.length) {
+                $select2.djangoSelect2({
+                    dropdownParent: e.currentTarget
+                });
+            }
+        });
+        $('#id_output').on('change', function () {
+            let $output = $(this).val();
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "{% url 'portal:store-num' %}",
+                data: {
+                    output: function () { return $output },
+                    csrfmiddlewaretoken: "{{ csrf_token }}"
+                },
+                success: function (d) {
+                    $('#sorted_num').val(d.message);
+                    $('#activity').focus()
+                }
+            })
+        })
+    })
+</script>

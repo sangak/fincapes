@@ -25,6 +25,11 @@ class DonorBSCreateView(BSModalCreateView):
     success_url = reverse_lazy('donor:index')
     success_message = 'Success: Donor was created.'
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['created'] = True
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['modal_title'] = _('Create Donor')
@@ -35,6 +40,11 @@ class DonorBSUpdateView(BSModalUpdateView):
     template_name = 'donors/donor-create.html'
     form_class = DonorBSModelForm
     success_url = reverse_lazy('donor:index')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['created'] = False
+        return kwargs
 
     def get_object(self, queryset=None, *args, **kwargs):
         uid = self.kwargs.get('uid')
